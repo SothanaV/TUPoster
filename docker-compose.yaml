@@ -1,29 +1,33 @@
-version: "2"
+version: "3.3"
 services:
 
   postgres:
-    image: postgres:10.4
-    volumes:
-      - ./postgres/initdb:/docker-entrypoint-initdb.d
-      - ./volume/postgres/backups:/backups
-      - ./volume/postgres/data:/var/lib/postgresql/data
+    image: postgres:11.2-alpine
+    # volumes:
+      # - ./postgres/initdb:/docker-entrypoint-initdb.d
+      # - ./volume/postgres/backups:/backups
+      # - ./volume/postgres/data:/var/lib/postgresql/data
     env_file:
-      - env
+      - .env
     restart: always
 
   poster_1:
     build: ./web
     restart: always
     env_file:
-      - env
+      - .env
     command: "sh run.sh"
+    depends_on:
+      - postgres
 
   poster_2:
     build: ./web
     restart: always
     env_file:
-      - env
+      - .env
     command: "sh run.sh"
+    depends_on:
+      - poster_1
 
   nginx:
     image: nginx:1.13
@@ -36,5 +40,7 @@ services:
       - ./volume/log/nginx:/var/log/nginx/
       - ./volume/log/letsencrypt:/var/log/letsencrypt/
     env_file:
-      - env
+      - .env
     restart: always
+    depends_on:
+      - poster_2
