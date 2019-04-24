@@ -16,15 +16,15 @@ import json
 #
 # READ SECRET
 #
-try:
-    with open('secret/tuauth.json', 'r') as fp:
-        tuauth_secret = json.load(fp)
-except FileNotFoundError:
-        print('!!! secret for TUAUTH not found.')
-        tuauth_secret = {
-            "client_id": '<client_id_here>',
-            "client_secret": '<client_secret_here>'
-        }
+# try:
+#     with open('secret/tuauth.json', 'r') as fp:
+#         tuauth_secret = json.load(fp)
+# except FileNotFoundError:
+#         print('!!! secret for TUAUTH not found.')
+#         tuauth_secret = {
+#             "client_id": '<client_id_here>',
+#             "client_secret": '<client_secret_here>'
+#         }
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -127,8 +127,8 @@ LOGIN_REDIRECT_URL = '/'
 #
 # Social app
 #
-SOCIAL_AUTH_TU_KEY = tuauth_secret['client_id']
-SOCIAL_AUTH_TU_SECRET = tuauth_secret['client_secret']
+# SOCIAL_AUTH_TU_KEY = tuauth_secret['client_id']
+# SOCIAL_AUTH_TU_SECRET = tuauth_secret['client_secret']
 SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
@@ -165,3 +165,10 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media/'
+
+SOCIAL_AUTH_TU_KEY = os.environ.get('TU_AUTH_KEY', None)
+SOCIAL_AUTH_TU_SECRET = os.environ.get('TU_AUTH_SECRET', None)
+
+
+# SOCIAL_AUTH_TU_KEY = 'QbgxR95dEdbZVMqR2lvwuxOK5p7A9lm21PoBSCXn'
+# SOCIAL_AUTH_TU_SECRET = 'zxgLBAhZkIayTaHdrgTUhpozgZVFEWruHP824ptK0i1HtbAsxm6wcqXM8Iv7U3HksHEBLjoA1TaLwzSR4wf5yCQYGiXZ1O714Esfhatj5xbu6hIiHkkWeLGGZB7rEgzF'
