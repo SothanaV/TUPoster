@@ -1,8 +1,8 @@
 from django.urls import path
-from app.views import home, all_qr, get_qr, get_report, logout, question, poster_detail, vote, scoring, get_question_detail
+from app.views import home, all_qr, get_qr, get_report, signout, question, poster_detail, vote, scoring, get_question_detail
 
 urlpatterns = [
-    path('logout/', logout),
+    path('logout/', signout),
     path('', home),
     path('getqr/', get_qr),
     path('getqr/<int:posterid>/', get_qr),

@@ -4,7 +4,10 @@ import pandas as pd
 
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.contrib.auth.views import logout as auth_logout
+# from django.contrib.auth.views import logout as auth_logout
+# from django.contrib.auth import views as auth_views
+# from django.contrib.auth.views import LogoutView
+from django.contrib.auth import logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -25,8 +28,12 @@ def is_sci_member(user):
 
 
 @login_required
-def logout(request):
-    auth_logout(request)
+def signout(request):
+    # auth_logout(request)
+    # auth_views.logout(request)
+    # auth_views.LogoutView()
+    # LogoutView.as_view()
+    logout(request)
     #
     # !!! CHANGE HOST ADDR (part of)
     #
