@@ -156,11 +156,11 @@ def logged_in_handle(sender, user, request, **kwargs):
         headers = {"Authorization": "Bearer {}".format(data['access_token'])}
         res = requests.get('https://api.tu.ac.th/api/me/', headers=headers).json()
 
-        refs = RefereeMapping.objects.filter(natid=res['description'])
-        if refs.exists():
-            ref = refs[0]
-            ref.user = user
-            ref.save()
+        # refs = RefereeMapping.objects.filter(natid=res['description'])
+        # if refs.exists():
+        #     ref = refs[0]
+        #     ref.user = user
+        #     ref.save()
 
         is_sci = False
         if res['company'] == 'คณะวิทยาศาสตร์และเทคโนโลยี':
