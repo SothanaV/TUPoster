@@ -58,9 +58,6 @@ services:
 
   nginx_poster:
     image: nginx:1.13
-    ports:
-      - "80:80"
-      - "443:443"
     volumes:
       - ./nginx/dev.conf.d/:/etc/nginx/conf.d/
       - ./volume/letsencrypt:/etc/letsencrypt/
