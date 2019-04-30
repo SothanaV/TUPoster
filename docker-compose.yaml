@@ -1,15 +1,25 @@
 version: "3.3"
-services:
 
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false
+
+services:
   postgres:
     image: postgres:11.2-alpine
-    # volumes:
-      # - ./postgres/initdb:/docker-entrypoint-initdb.d
-      # - ./volume/postgres/backups:/backups
-      # - ./volume/postgres/data:/var/lib/postgresql/data
+    volumes:
+      - ./postgres/initdb:/docker-entrypoint-initdb.d
+      - ./volume/postgres/backups:/backups
+      - ./volume/postgres/data:/var/lib/postgresql/data
     env_file:
       - .env
     restart: always
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
 
   poster_1:
     build: ./web
@@ -19,6 +29,15 @@ services:
     command: "sh run.sh"
     depends_on:
       - postgres
+    labels:
+      - "traefik.frontend.rule=Host:poster.smartmushroombox.com;PathPrefix:/"
+      - traefik.backend=poster_1
+      - traefik.port=8000
+      - traefik.docker.network=proxy
+    networks:
+      - internal
+      - proxy
+    
 
   poster_2:
     build: ./web
@@ -28,8 +47,16 @@ services:
     command: "sh run.sh"
     depends_on:
       - poster_1
+    labels:
+      - "traefik.frontend.rule=Host:poster.smartmushroombox.com;PathPrefix:/"
+      - traefik.backend=poster_2
+      - traefik.port=8000
+      - traefik.docker.network=proxy
+    networks:
+      - internal
+      - proxy
 
-  nginx:
+  nginx_poster:
     image: nginx:1.13
     ports:
       - "80:80"
@@ -44,3 +71,12 @@ services:
     restart: always
     depends_on:
       - poster_2
+    labels:
+        - traefik.enable=true
+        - traefik.backend=nginx_poster
+        - "traefik.frontend.rule=Host:poster.smartmushroombox.com;PathPrefix:/static/,/media/"
+        - traefik.port=80
+        - traefik.docker.network=proxy
+    networks:
+      - internal
+      - proxy
