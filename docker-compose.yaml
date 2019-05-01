@@ -28,7 +28,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - ./volume/static:/var/www/static
+      - ./volume/static:/static
     labels:
       - "traefik.frontend.rule=Host:poster.service.sci.tu.ac.th;PathPrefix:/"
       - traefik.backend=poster
