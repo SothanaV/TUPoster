@@ -6,13 +6,13 @@
 <div style="margin:50px;">
   <div id='content'>
     <h3> {{poster.poster_id}}:  {{poster.title}}</h3>
-    <p> http://poster.smartmushroombox.com/poster/{{poster.id}}/</p>
+    <p> {{ request.scheme }}://{{ request.get_host }}/poster/{{poster.id}}/</p>
     <div id="qrcode"></div>
   </div>
 
 </div>
 <script>
-    new QRCode(document.getElementById("qrcode"), "http://poster.smartmushroombox.com/poster/"+{{poster.id}}+"/")
+    new QRCode(document.getElementById("qrcode"), "{{ request.scheme }}://{{ request.get_host }}/poster/"+{{poster.id}}+"/")
 </script>
 
 {% endblock %}

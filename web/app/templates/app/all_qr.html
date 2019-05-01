@@ -10,7 +10,7 @@
           {% for poster in page %}
             <div class="column">
               <h3 style="margin-top: 10px; margin-bottom: 3px; padding-left: 20px;"> {{poster.poster_id}} </h3>
-              <p style="margin: 0px; padding-left: 20px;"> http://poster.smartmushroombox.com/poster/{{poster.id}}/</p>
+              <p style="margin: 0px; padding-left: 20px;"> {{ request.scheme }}://{{ request.get_host }}/poster/{{poster.id}}/</p>
               <div id="qr_{{poster.id}}" style="margin: 10px; padding-left: 20px;"></div>
             </div>
           {% endfor %}
@@ -22,7 +22,7 @@
       let ids = JSON.parse('{{ids}}')
       ids.forEach(x => {
         new QRCode(document.getElementById("qr_"+x), {
-          text: "http://poster.smartmushroombox.com/poster/"+x+"/",
+          text: "{{ request.scheme }}://{{ request.get_host }}/poster/"+x+"/",
           width: 192,
           height: 192,
         })
