@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'social_django',
     'tuauth',
 
-    'web.app',
+    'app',
 ]
 
 MIDDLEWARE = [
