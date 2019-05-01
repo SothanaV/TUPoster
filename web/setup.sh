@@ -5,7 +5,7 @@ rm -rf ./media/
 find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 find . -path "*/*.pyc" -delete
 
-python manage.py makemigrations
+python manage.py makemigrations app
 python manage.py migrate
 echo yes | python manage.py flush
 echo '- init db -'
