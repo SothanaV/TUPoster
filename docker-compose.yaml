@@ -34,6 +34,8 @@ services:
       - traefik.backend=poster
       - traefik.port=8000
       - traefik.docker.network=proxy
+    ports:
+      - 8888:8888
     networks:
       - internal
       - proxy
