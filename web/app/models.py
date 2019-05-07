@@ -90,6 +90,9 @@ class Poster(models.Model):
                             blank=True)
     type = models.CharField(max_length=999, null=True,
                             blank=True)
+    ref1 = models.CharField(max_length=999, null=True, blank=True)
+    ref2 = models.CharField(max_length=999, null=True, blank=True)
+    ref3 = models.CharField(max_length=999, null=True, blank=True)
     referees = models.ManyToManyField(RefereeMapping, related_name="ref_poster")
 
     def __str__(self):
