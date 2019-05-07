@@ -73,3 +73,4 @@ widgetsnbextension==3.2.1
 wrapt==1.10.11
 xlrd==1.1.0
 git+https://github.com/scitu/django-tuauth.git
+django-import-export

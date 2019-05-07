@@ -1,5 +1,6 @@
 from django.contrib import admin
 from app.models import RefereeMapping, Event, Poster, Vote, Question, Score, MyUser
+from import_export.admin import ImportExportModelAdmin
 
 
 class EventAdmin(admin.ModelAdmin):
@@ -23,7 +24,7 @@ class VoteAdmin(admin.ModelAdmin):
     list_display = [f.name for f in Vote._meta.fields]
 
 
-class ScoreAdmin(admin.ModelAdmin):
+class ScoreAdmin(ImportExportModelAdmin):
     list_display = [f.name for f in Score._meta.fields]
     list_filter = ['question']
 

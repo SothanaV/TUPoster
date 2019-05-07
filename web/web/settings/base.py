@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'social_django',
     'tuauth',
-
+    'import_export',
     'app',
 ]
 
@@ -172,3 +172,5 @@ SOCIAL_AUTH_TU_SECRET = os.environ.get('TU_AUTH_SECRET', None)
 
 # SOCIAL_AUTH_TU_KEY = 'QbgxR95dEdbZVMqR2lvwuxOK5p7A9lm21PoBSCXn'
 # SOCIAL_AUTH_TU_SECRET = 'zxgLBAhZkIayTaHdrgTUhpozgZVFEWruHP824ptK0i1HtbAsxm6wcqXM8Iv7U3HksHEBLjoA1TaLwzSR4wf5yCQYGiXZ1O714Esfhatj5xbu6hIiHkkWeLGGZB7rEgzF'
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
