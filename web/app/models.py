@@ -46,8 +46,8 @@ class RefereeMapping(models.Model):
                           ('10', 'โครงการหลักสูตรนานาชาติ')]
 
     natid = models.CharField(max_length=13, unique=True)
-    name = models.CharField(max_length=128)
-    department = models.CharField(max_length=64, null=True, blank=True)
+    name = models.CharField(max_length=999)
+    department = models.CharField(max_length=999, null=True, blank=True)
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -79,16 +79,16 @@ class Poster(models.Model):
     poster_id = models.CharField(max_length=32)
     title = models.TextField()
     hilight = models.TextField(null=True, blank=True)
-    student_1 = models.CharField(max_length=128, null=True, blank=True)
-    student_2 = models.CharField(max_length=128, null=True, blank=True)
-    student_3 = models.CharField(max_length=128, null=True, blank=True)
-    student_4 = models.CharField(max_length=128, null=True, blank=True)
-    advisor = models.CharField(max_length=128, null=True, blank=True)
-    co_advisor = models.CharField(max_length=128, null=True, blank=True)
+    student_1 = models.CharField(max_length=999, null=True, blank=True)
+    student_2 = models.CharField(max_length=999, null=True, blank=True)
+    student_3 = models.CharField(max_length=999, null=True, blank=True)
+    student_4 = models.CharField(max_length=999, null=True, blank=True)
+    advisor = models.CharField(max_length=999, null=True, blank=True)
+    co_advisor = models.CharField(max_length=999, null=True, blank=True)
 
-    department = models.CharField(max_length=128, null=True,
+    department = models.CharField(max_length=999, null=True,
                             blank=True)
-    type = models.CharField(max_length=128, null=True,
+    type = models.CharField(max_length=999, null=True,
                             blank=True)
     referees = models.ManyToManyField(RefereeMapping, related_name="ref_poster")
 
