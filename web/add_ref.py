@@ -45,7 +45,7 @@ column = ['order', 'order2','prefix','name', 'position', 'type','department','na
 
 
 # names = pd.read_excel('./data/name.xlsx', sheet_name="ฟ.3 สายวิชาการ (รายชื่อ)", names=column)[8:239]
-names = pd.read_excel('./data/รายชื่อบุคลากรสายวิชาการ03052019edit(1).xlsx', sheet_name="รวม", names=column)[5:247]
+names = pd.read_excel('./data/รายชื่อบุคลากรสายวิชาการ03052019edit.xlsx', sheet_name="รวม", names=column)[5:247]
 
 # In[7]:
 

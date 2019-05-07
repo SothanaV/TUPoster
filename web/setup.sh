@@ -1,9 +1,5 @@
 #! bin/bash
 echo '-- Run Setup Script --'
-rm -rf db.sqlite3
-rm -rf ./media/
-find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-find . -path "*/*.pyc" -delete
 
 python manage.py makemigrations app
 python manage.py migrate
