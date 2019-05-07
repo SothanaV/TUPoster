@@ -18,7 +18,7 @@ from app.models import Poster, Vote, Event, Score, RefereeMapping
 from app.exceptions import OverScoreException, NeedRefereePermissinException,\
     VotingUnavailableException, NeedSciPermissionException, VoteLimitationException
 
-reward_thresh = [48, 44, 40]
+reward_thresh = [95, 90, 80]
 reward_thresh_des = ["ดีเยี่ยม", "ดีมาก", "ดี"]
 
 User = get_user_model()
