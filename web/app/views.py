@@ -12,13 +12,13 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
-from django.db.models import Q, Count, Avg, Sum
+from django.db.models import Q, Count, Avg, Sum, FloatField
 
 from app.models import Poster, Vote, Event, Score, RefereeMapping
 from app.exceptions import OverScoreException, NeedRefereePermissinException,\
     VotingUnavailableException, NeedSciPermissionException, VoteLimitationException
 
-reward_thresh = [48, 44, 40]
+reward_thresh = [95, 90, 80]
 reward_thresh_des = ["ดีเยี่ยม", "ดีมาก", "ดี"]
 
 User = get_user_model()
@@ -71,7 +71,7 @@ def get_report(request, event_pk=1):
         posters = list(Poster.objects.filter(event=event).values(
             'poster_id', 'score__question', 'title',
         ).annotate(
-            avg_score=Avg('score__value', filter=Q(score__question__is_use=True))
+            avg_score=Avg('score__value', output_field=FloatField() ,filter=Q(score__question__is_use=True))
         ).order_by('-avg_score'))
 
         posters = pd.DataFrame(posters)
@@ -101,6 +101,30 @@ def get_report(request, event_pk=1):
             'rewards': zip(des,  rewards),
         }
         return render(request, 'app/report.html', context)
+
+def export_report(request):
+    event = Event.objects.get(pk=1)
+    posters = list(Poster.objects.filter(event=event).values(
+            'poster_id', 'score__question', 'title',
+        ).annotate(
+            avg_score=Avg('score__value',output_field=FloatField(), filter=Q(score__question__is_use=True))
+        ).order_by('-avg_score'))
+    posters = pd.DataFrame(posters)
+    posters = posters.groupby(['poster_id',])
+    rewards = []
+    for name, group in posters:
+        score = group.avg_score.sum()
+        rewards.append({
+            'poster_id': name,
+            'title': group.iloc[0]['title'],
+            'score': score,
+        })
+    data = pd.DataFrame(rewards)
+    data = data.sort_values(by=['score'],ascending=False)
+    filename = './static/output.xlsx'
+    data.to_excel(filename)
+    context = {'file':filename}
+    return render(request,'app/export_report.html',context)
 
 
 def all_qr(request):

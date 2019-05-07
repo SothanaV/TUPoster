@@ -1,5 +1,5 @@
 from django.urls import path
-from app.views import home, all_qr, get_qr, get_report, signout, question, poster_detail, vote, scoring, get_question_detail
+from app.views import home, all_qr, get_qr, get_report, signout, question, poster_detail, vote, scoring, get_question_detail, export_report
 
 urlpatterns = [
     path('logout/', signout),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('qdetail/<int:pk>/', get_question_detail),
     path('report/', get_report),
     path('allqr/', all_qr),
+    path('getreport/',export_report),
 ]

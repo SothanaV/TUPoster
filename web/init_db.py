@@ -60,26 +60,36 @@ academic_group.permissions.add(p1, p2, p3, p4, p5, p6)
 # Initial event
 #
 event = Event.objects.create(
-    title="Sci 2018",
+    title="Sci 2019",
     place="TU Rangsit",
     max_vote=1,
-    datetime="2018-05-12 10:00:00",
+    datetime="2019-05-8 9:00:00",
 )
 
 q1 = Question.objects.create(
     event=event,
-    message="ความสวยงาม ความเหมาะสม อ่านง่าย สื่อความหมายชัดเจน และตรงตามรูปแบบที่กำหนด",
-    max_score=10
+    message="รูปแบบการจัดวางเหมาะสม สวยงาม ขนาดตัวอักษร รูปภาพชัดเจน",
+    max_score=20
 )
 q2 = Question.objects.create(
     event=event,
-    message="โจทย์วิจัยชัดเจน วิธีการเหมาะสม และการเสนอผลการทดลองถูกต้อง โอกาสการนำไปใช้ประโยชน์",
+    message="เนื้อหาอ่านแล้วเข้าใจ ครบสมบูรณ์ ผลการศึกษาครบถ้วน",
     max_score=20
 )
 
 q3 = Question.objects.create(
     event=event,
-    message="การนำเสนอ (ชัดเจน และถูกต้อง)\nการตอบคำถาม (ตรงประเด็น และชัดเจน)",
+    message="มีความสร้างสรรค์/องค์ความรู้ใหม่ มีประโยชน์ มีผลกระทบในวงกว้าง สร้างมูลค่าเพิ่ม",
+    max_score=20
+)
+q4 = Question.objects.create(
+    event=event,
+    message="ความรู้เกี่ยวกับงานและการตอบคำถาม",
+    max_score=20
+)
+q5 = Question.objects.create(
+    event=event,
+    message="ทักษะการสื่อสารและนำเสนอให้ผู้ฟังสนใจ และเข้าใจ",
     max_score=20
 )
 

@@ -38,16 +38,14 @@ def normal_name(x):
 # In[5]:
 
 
-column = ['order', 'name', 'position', 'department', 'campus', 'type',
-          'jobid', 'level', 'natid', 'education', 'education_full',
-          'major', 'grad_university', 'remark']
+column = ['order', 'order2','prefix','name', 'position', 'type','department','natid', 'etc']
 
 
 # In[6]:
 
 
-names = pd.read_excel('./data/name.xlsx', sheet_name="ฟ.3 สายวิชาการ (รายชื่อ)", names=column)[8:239]
-
+# names = pd.read_excel('./data/name.xlsx', sheet_name="ฟ.3 สายวิชาการ (รายชื่อ)", names=column)[8:239]
+names = pd.read_excel('./data/รายชื่อบุคลากรสายวิชาการ03052019edit(1).xlsx', sheet_name="รวม", names=column)[5:247]
 
 # In[7]:
 
@@ -82,7 +80,8 @@ names.department.unique()
 bulk = list()
 for idx, row in names.iterrows():
     try:
-        um = RefereeMapping(name=row['name'], natid=row['natid'], department=row['department'])
+        natid = row['natid'].replace('-','')
+        um = RefereeMapping(name=row['name'], natid=natid, department=row['department'])
         um.save()
     except Exception as err:
         print(err)

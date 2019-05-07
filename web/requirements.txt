@@ -35,6 +35,7 @@ nbformat==4.4.0
 notebook==5.4.1
 numpy==1.14.3
 oauthlib==2.0.7
+openpyxl==2.6.2
 pandas==0.22.0
 pandocfilters==1.4.2
 parso==0.2.0
