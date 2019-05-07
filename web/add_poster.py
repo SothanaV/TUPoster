@@ -32,14 +32,14 @@ def normal_name(x):
 # columns = ['poster_id', 'order', 'title', 'prefix_1', 'name_1',
 #            'prefix_2', 'name_2', 'prefix_3', 'name_3',  'prefix_4', 'name_4',
 #            'advisor', 'co-advisor', 'department', 'type', 'hilight', 'ref1', 'ref2', 'ref3']
-columns = ['poster_id', 'title', 'name_1','advisor', 'co-advisor', 'department', 'type', 'hilight', 'ref1', 'ref2', 'ref3','type']
+columns = ['poster_id', 'title', 'allname','advisor', 'co-advisor', 'department', 'type', 'hilight', 'ref1', 'ref2', 'ref3','type']
 
 
 # In[4]:
 
 
 posters = pd.read_excel(
-    './data/ข้อมูลโปสเตอร์7พค62.xlsx', names = columns, sheet_name = "โปสเตอร์5พค62")
+    './data/ข้อมูลโปสเตอร์7พค62_2.xlsx', names = columns, sheet_name = "โปสเตอร์5พค62")
 
 
 # In[5]:
@@ -100,21 +100,50 @@ for i, r in posters.iterrows():
     co_advisor = r["co-advisor"]
     department = r.department
     types = r.type
-    # student_1 = None
-    if r.name_1:
-        student_1 = str(r.name_1)
+    all_name = r.allname.split(',')
+    # # student_1 = None
     # if r.name_1:
-    #     student_1 = str(r.prefix_1) + str(r.name_1)
+    #     student_1 = str(r.name_1)
+    # # if r.name_1:
+    # #     student_1 = str(r.prefix_1) + str(r.name_1)
+    # student_2 = None
+    # # if r.name_2:
+    # #     student_2 = str(r.prefix_2) + str(r.name_2)
+    # student_3 = None
+    # # if r.name_3:
+    # #     student_3 = str(r.prefix_3) + str(r.name_3)
+    # student_4 = None
+    # # if r.name_4:
+    # #     student_4 = str(r.prefix_4) + str(r.name_4)
+    student_1 = None
     student_2 = None
-    # if r.name_2:
-    #     student_2 = str(r.prefix_2) + str(r.name_2)
     student_3 = None
-    # if r.name_3:
-    #     student_3 = str(r.prefix_3) + str(r.name_3)
     student_4 = None
-    # if r.name_4:
-    #     student_4 = str(r.prefix_4) + str(r.name_4)
-
+    ref1 = None
+    ref2 = None
+    ref3 = None
+    if r.ref1:
+        ref1 = r.ref1
+    if r.ref2:
+        ref2 = r.ref2
+    if r.ref3:
+        ref3 = r.ref3
+    try:
+        student_1 = all_name[0]
+    except Exception as err:
+        print(err)
+    try:
+        student_2 = all_name[1]
+    except Exception as err:
+        print(err)
+    try:
+        student_3 = all_name[2]
+    except Exception as err:
+        print(err)
+    try:
+        student_4 = all_name[3]
+    except Exception as err:
+        print(err)
     params = {
         'event': event,
         'poster_id': poster_id,
@@ -128,6 +157,9 @@ for i, r in posters.iterrows():
         'co_advisor': co_advisor,
         'department': department,
         'type': types,
+        'ref1': ref1,
+        'ref2': ref2,
+        'ref3': ref3,
     }
     bulk.append(Poster(**params))
 Poster.objects.bulk_create(bulk)
@@ -166,9 +198,30 @@ print()
 #         poster.save()
 
 # In[13]:
-ref_set = RefereeMapping.objects.all()
+# ref_set = RefereeMapping.objects.all()
+# posters = Poster.objects.all()
+# with transaction.atomic():
+#     for poster in posters:
+#         poster.referees.add(*ref_set)
+#         poster.save
+
 posters = Poster.objects.all()
 with transaction.atomic():
     for poster in posters:
-        poster.referees.add(*ref_set)
+        # ref = RefereeMapping.objects.get()
+        try:
+            ref1 = RefereeMapping.objects.filter(name=poster.ref1)[0]
+            poster.referees.add(ref1)
+        except Exception as err:
+            print(err)
+        try:
+            ref2 = RefereeMapping.objects.filter(name=poster.ref2)[0]
+            poster.referees.add(ref2)
+        except Exception as err:
+            print(err)
+        try:
+            ref3 = RefereeMapping.objects.filter(name=poster.ref3)[0]
+            poster.referees.add(ref3)
+        except Exception as err:
+            print(err)
         poster.save

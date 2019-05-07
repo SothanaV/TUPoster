@@ -38,14 +38,18 @@ def normal_name(x):
 # In[5]:
 
 
-column = ['order', 'order2','prefix','name', 'position', 'type','department','natid', 'etc']
+column = ['name', 'position', 'department','natid']
 
 
 # In[6]:
 
 
 # names = pd.read_excel('./data/name.xlsx', sheet_name="ฟ.3 สายวิชาการ (รายชื่อ)", names=column)[8:239]
+<<<<<<< HEAD
 names = pd.read_excel('./data/รายชื่อบุคลากรสายวิชาการ03052019edit.xlsx', sheet_name="รวม", names=column)[5:247]
+=======
+names = pd.read_excel('./data/ข้อมูลโปสเตอร์7พค62_2.xlsx', sheet_name="ชื่อบุคคลากร", names=column)[1:245]
+>>>>>>> origin/master
 
 # In[7]:
 
