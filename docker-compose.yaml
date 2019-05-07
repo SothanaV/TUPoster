@@ -10,8 +10,6 @@ services:
   postgres:
     image: postgres:11.2-alpine
     volumes:
-      - ./postgres/initdb:/docker-entrypoint-initdb.d
-      - ./volume/postgres/backups:/backups
       - ./volume/postgres/data:/var/lib/postgresql/data
     env_file:
       - .env
@@ -21,7 +19,7 @@ services:
     labels:
       - traefik.enable=false
 
-  poster_1:
+  poster:
     build: ./web
     restart: always
     env_file:
@@ -29,27 +27,11 @@ services:
     command: "sh run.sh"
     depends_on:
       - postgres
+    volumes:
+      - ./volume/static:/static
     labels:
-      - "traefik.frontend.rule=Host:poster.localhost.com;PathPrefix:/"
-      - traefik.backend=poster_1
-      - traefik.port=8000
-      - traefik.docker.network=proxy
-    networks:
-      - internal
-      - proxy
-    
-
-  poster_2:
-    build: ./web
-    restart: always
-    env_file:
-      - .env
-    command: "sh run.sh"
-    depends_on:
-      - poster_1
-    labels:
-      - "traefik.frontend.rule=Host:poster.localhost.com;PathPrefix:/"
-      - traefik.backend=poster_2
+      - "traefik.frontend.rule=Host:poster.service.sci.tu.ac.th;PathPrefix:/"
+      - traefik.backend=poster
       - traefik.port=8000
       - traefik.docker.network=proxy
     networks:
@@ -57,21 +39,14 @@ services:
       - proxy
 
   nginx_poster:
-    image: nginx:1.13
+    image: nginx:alpine
     volumes:
-      - ./nginx/dev.conf.d/:/etc/nginx/conf.d/
-      - ./volume/letsencrypt:/etc/letsencrypt/
-      - ./volume/log/nginx:/var/log/nginx/
-      - ./volume/log/letsencrypt:/var/log/letsencrypt/
-    env_file:
-      - .env
+      - ./volume/static:/usr/share/nginx/html/static/
     restart: always
-    depends_on:
-      - poster_2
     labels:
         - traefik.enable=true
         - traefik.backend=nginx_poster
-        - "traefik.frontend.rule=Host:poster.localhost.com;PathPrefix:/static/,/media/"
+        - "traefik.frontend.rule=Host:poster.service.sci.tu.ac.th;PathPrefix:/static/,/media/"
         - traefik.port=80
         - traefik.docker.network=proxy
     networks:
