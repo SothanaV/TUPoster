@@ -121,7 +121,7 @@ def export_report(request):
         })
     data = pd.DataFrame(rewards)
     data = data.sort_values(by=['score'],ascending=False)
-    filename = '/file/output.xlsx'
+    filename = '/static/output.xlsx'
     data.to_excel(filename)
     context = {'file':filename}
     return render(request,'app/export_report.html',context)
