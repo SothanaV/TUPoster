@@ -115,3 +115,4 @@ venv.bak/
 
 volume/
 db.json
+.vscode/
