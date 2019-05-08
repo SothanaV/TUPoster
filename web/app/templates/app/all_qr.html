@@ -20,7 +20,7 @@
     </div>
     <script>
       let ids = JSON.parse('{{ids}}')
-      ids.sort(compare(x, y) return x-y)
+      ids.sort(compare(x, y) => return x-y)
       ids.forEach(x => {
         new QRCode(document.getElementById("qr_"+x), {
           text: "{{ request.scheme }}://{{ request.get_host }}/poster/"+x+"/",
